@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindIgnite - Neuroscience-Inspired Learning Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 min-h-screen overflow-x-hidden">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div class="text-center">
+            <div class="brain-loader"></div>
+            <p class="text-white mt-4 text-lg">Igniting Neural Pathways...</p>
+        </div>
+    </div>
+
+    <!-- Navigation Hamburger -->
+    <div id="nav-toggle" class="fixed top-6 left-6 z-40 cursor-pointer">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="fixed top-0 left-0 h-full w-80 bg-white/10 backdrop-blur-xl transform -translate-x-full transition-transform duration-500 z-30">
+        <div class="p-8">
+            <h2 class="text-2xl font-bold text-white mb-8">MindIgnite</h2>
+            <ul class="space-y-4">
+                <li><a href="#home" class="nav-link" data-page="home">🏠 Home</a></li>
+                <li><a href="#scoreboard" class="nav-link" data-page="scoreboard">🏆 Scoreboard</a></li>
+                <li><a href="#profile" class="nav-link" data-page="profile">👤 Profile</a></li>
+                <li><a href="#subjects" class="nav-link" data-page="subjects">📚 Subjects</a></li>
+                <li><a href="#about" class="nav-link" data-page="about">ℹ️ About Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main id="main-content" class="relative">
+        <!-- Home Page -->
+        <section id="home-page" class="page active">
+            <!-- Hero Section with Brain and Spinal Cord -->
+            <section id="hero" class="min-h-screen flex items-center justify-center relative">
+                <div class="brain-container">
+                    <!-- Animated Brain SVG -->
+                    <svg id="brain-svg" class="brain-svg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Brain Hemispheres -->
+                        <ellipse cx="200" cy="120" rx="80" ry="60" class="brain-hemisphere left" fill="url(#brainGradient)"/>
+                        <ellipse cx="200" cy="120" rx="80" ry="60" class="brain-hemisphere right" fill="url(#brainGradient)"/>
+                        
+                        <!-- Neural Connections -->
+                        <g class="neurons">
+                            <circle cx="160" cy="100" r="3" class="neuron"/>
+                            <circle cx="240" cy="100" r="3" class="neuron"/>
+                            <circle cx="180" cy="140" r="3" class="neuron"/>
+                            <circle cx="220" cy="140" r="3" class="neuron"/>
+                            <circle cx="200" cy="80" r="3" class="neuron"/>
+                        </g>
+                        
+                        <!-- Flames -->
+                        <g class="flames">
+                            <path d="M190 60 Q200 40 210 60 Q200 50 190 60" class="flame"/>
+                            <path d="M180 70 Q190 50 200 70 Q190 60 180 70" class="flame"/>
+                            <path d="M200 70 Q210 50 220 70 Q210 60 200 70" class="flame"/>
+                        </g>
+                        
+                        <!-- Spinal Cord -->
+                        <rect x="195" y="180" width="10" height="120" class="spinal-cord" fill="url(#spinalGradient)"/>
+                        
+                        <!-- Vapor Particles -->
+                        <g class="vapor">
+                            <circle cx="200" cy="200" r="2" class="vapor-particle"/>
+                            <circle cx="205" cy="210" r="1.5" class="vapor-particle"/>
+                            <circle cx="195" cy="220" r="2.5" class="vapor-particle"/>
+                            <circle cx="210" cy="230" r="1" class="vapor-particle"/>
+                            <circle cx="190" cy="240" r="2" class="vapor-particle"/>
+                        </g>
+                        
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="brainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                                <stop offset="50%" style="stop-color:#ff8e53;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ff6b6b;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="spinalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                
+                <div class="hero-text absolute top-1/4 left-1/2 transform -translate-x-1/2 text-center">
+                    <h1 class="text-6xl font-bold text-white mb-4 glow-text">MindIgnite</h1>
+                    <p class="text-xl text-purple-200 mb-8">Where Knowledge Meets Neural Fire</p>
+                    <button id="cta-button" class="cta-button">Begin Your Journey</button>
+                </div>
+            </section>
+
+            <!-- Scroll-Based Info Blocks -->
+            <section id="info-blocks" class="py-20">
+                <div class="container mx-auto px-4">
+                    <div class="info-card" data-subject="science">
+                        <h3 class="text-2xl font-bold text-white mb-4">🔬 Science</h3>
+                        <p class="quote text-purple-200 mb-6">"In the grand tapestry of existence, science is the thread that weaves together the fabric of reality, revealing the hidden symphonies of the cosmos through the lens of empirical inquiry."</p>
+                        <div class="subcategories hidden">
+                            <button class="subcategory-btn">Physics</button>
+                            <button class="subcategory-btn">Chemistry</button>
+                            <button class="subcategory-btn">Biology</button>
+                            <button class="subcategory-btn">Astronomy</button>
+                        </div>
+                    </div>
+
+                    <div class="info-card" data-subject="mathematics">
+                        <h3 class="text-2xl font-bold text-white mb-4">📐 Mathematics</h3>
+                        <p class="quote text-purple-200 mb-6">"Mathematics is the language in which the universe whispers its deepest secrets, a symphony of logic and beauty that transcends the boundaries of human imagination."</p>
+                        <div class="subcategories hidden">
+                            <button class="subcategory-btn">Algebra</button>
+                            <button class="subcategory-btn">Calculus</button>
+                            <button class="subcategory-btn">Geometry</button>
+                            <button class="subcategory-btn">Statistics</button>
+                        </div>
+                    </div>
+
+                    <div class="info-card" data-subject="technology">
+                        <h3 class="text-2xl font-bold text-white mb-4">💻 Technology</h3>
+                        <p class="quote text-purple-200 mb-6">"Technology is the bridge between human aspiration and cosmic possibility, where innovation becomes the catalyst for transcending the limitations of our current reality."</p>
+                        <div class="subcategories hidden">
+                            <button class="subcategory-btn">Programming</button>
+                            <button class="subcategory-btn">AI & ML</button>
+                            <button class="subcategory-btn">Cybersecurity</button>
+                            <button class="subcategory-btn">Web Development</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Film-Style Carousel -->
+            <section id="carousel-section" class="py-20">
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <div class="carousel-card" data-subject="history">
+                            <h3>History</h3>
+                            <p class="carousel-quote">"The past is not a foreign country, but a mirror reflecting the patterns of human consciousness across the vast expanse of time."</p>
+                            <div class="carousel-subcategories hidden">
+                                <button>Ancient Civilizations</button>
+                                <button>World Wars</button>
+                                <button>Renaissance</button>
+                                <button>Modern Era</button>
+                            </div>
+                        </div>
+                        <div class="carousel-card" data-subject="arts">
+                            <h3>Arts & Literature</h3>
+                            <p class="carousel-quote">"Art is the soul's language, where emotions transcend words and beauty becomes a universal dialect of the human spirit."</p>
+                            <div class="carousel-subcategories hidden">
+                                <button>Classical Literature</button>
+                                <button>Modern Art</button>
+                                <button>Poetry</button>
+                                <button>Music Theory</button>
+                            </div>
+                        </div>
+                        <div class="carousel-card" data-subject="philosophy">
+                            <h3>Philosophy</h3>
+                            <p class="carousel-quote">"Philosophy is the art of asking questions that have no answers, yet illuminate the path to wisdom and understanding."</p>
+                            <div class="carousel-subcategories hidden">
+                                <button>Ethics</button>
+                                <button>Metaphysics</button>
+                                <button>Logic</button>
+                                <button>Epistemology</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Scoreboard Page -->
+        <section id="scoreboard-page" class="page hidden">
+            <div class="min-h-screen flex items-center justify-center">
+                <div class="glass-card max-w-4xl w-full p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8 text-center">🏆 Global Leaderboard</h2>
+                    <div id="leaderboard" class="space-y-4">
+                        <!-- Leaderboard entries will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Page -->
+        <section id="profile-page" class="page hidden">
+            <div class="min-h-screen flex items-center justify-center">
+                <div class="glass-card max-w-4xl w-full p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8 text-center">👤 Your Neural Profile</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="profile-stats">
+                            <h3 class="text-2xl font-bold text-white mb-4">Statistics</h3>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                                <span class="progress-text">Neural Efficiency: 75%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                                <span class="progress-text">Knowledge Retention: 60%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                                <span class="progress-text">Cognitive Speed: 85%</span>
+                            </div>
+                        </div>
+                        <div class="quiz-history">
+                            <h3 class="text-2xl font-bold text-white mb-4">Recent Quizzes</h3>
+                            <div class="space-y-3">
+                                <div class="quiz-item">
+                                    <span class="quiz-name">Quantum Physics</span>
+                                    <span class="quiz-score">92%</span>
+                                </div>
+                                <div class="quiz-item">
+                                    <span class="quiz-name">Advanced Calculus</span>
+                                    <span class="quiz-score">88%</span>
+                                </div>
+                                <div class="quiz-item">
+                                    <span class="quiz-name">Neural Networks</span>
+                                    <span class="quiz-score">95%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subjects Page -->
+        <section id="subjects-page" class="page hidden">
+            <div class="min-h-screen py-20">
+                <div class="container mx-auto px-4">
+                    <h2 class="text-4xl font-bold text-white mb-12 text-center">📚 Subject Library</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="subject-card" data-subject="science">
+                            <div class="subject-icon">🔬</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Science</h3>
+                            <p class="text-purple-200 mb-6">Explore the fundamental laws that govern our universe, from quantum mechanics to evolutionary biology.</p>
+                            <div class="subject-animation science-animation"></div>
+                        </div>
+                        <div class="subject-card" data-subject="mathematics">
+                            <div class="subject-icon">📐</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Mathematics</h3>
+                            <p class="text-purple-200 mb-6">Master the universal language of patterns, logic, and abstract reasoning.</p>
+                            <div class="subject-animation math-animation"></div>
+                        </div>
+                        <div class="subject-card" data-subject="technology">
+                            <div class="subject-icon">💻</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Technology</h3>
+                            <p class="text-purple-200 mb-6">Build the future through code, algorithms, and innovative digital solutions.</p>
+                            <div class="subject-animation tech-animation"></div>
+                        </div>
+                        <div class="subject-card" data-subject="history">
+                            <div class="subject-icon">📜</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">History</h3>
+                            <p class="text-purple-200 mb-6">Journey through time to understand the forces that shaped human civilization.</p>
+                            <div class="subject-animation history-animation"></div>
+                        </div>
+                        <div class="subject-card" data-subject="arts">
+                            <div class="subject-icon">🎨</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Arts & Literature</h3>
+                            <p class="text-purple-200 mb-6">Discover the creative expressions that define human culture and imagination.</p>
+                            <div class="subject-animation arts-animation"></div>
+                        </div>
+                        <div class="subject-card" data-subject="philosophy">
+                            <div class="subject-icon">🤔</div>
+                            <h3 class="text-2xl font-bold text-white mb-4">Philosophy</h3>
+                            <p class="text-purple-200 mb-6">Question reality, explore consciousness, and seek wisdom through critical thinking.</p>
+                            <div class="subject-animation philosophy-animation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Page -->
+        <section id="about-page" class="page hidden">
+            <div class="min-h-screen flex items-center justify-center">
+                <div class="glass-card max-w-4xl w-full p-8">
+                    <h2 class="text-4xl font-bold text-white mb-8 text-center">ℹ️ About MindIgnite</h2>
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-lg text-purple-200 mb-6 leading-relaxed">
+                            In the vast expanse of human consciousness, where knowledge meets imagination, MindIgnite emerges as a beacon of intellectual enlightenment. We are not merely a platform; we are the architects of cognitive evolution, the custodians of wisdom's eternal flame.
+                        </p>
+                        <p class="text-lg text-purple-200 mb-6 leading-relaxed">
+                            Our mission transcends the boundaries of traditional education, for we understand that true learning is not the mere accumulation of facts, but the ignition of neural pathways that illuminate the darkest corners of human potential. Every quiz, every interaction, every moment of discovery is a symphony of synaptic connections, a dance of dendrites and axons that transforms the ordinary into the extraordinary.
+                        </p>
+                        <p class="text-lg text-purple-200 leading-relaxed">
+                            Welcome to the future of learning, where every question is a spark, every answer is a revelation, and every mind is a universe waiting to be explored.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold text-white mb-6">Welcome Back</h2>
+            <form id="login-form" class="space-y-4">
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required class="form-input">
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required class="form-input">
+                    <button type="button" class="password-toggle">👁️</button>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+            <p class="text-center mt-4">
+                <a href="#" id="show-signup" class="text-purple-300 hover:text-white">Don't have an account? Sign up</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-2xl font-bold text-white mb-6">Join the Revolution</h2>
+            <form id="signup-form" class="space-y-4">
+                <div class="input-group">
+                    <input type="text" placeholder="Full Name" required class="form-input">
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Email" required class="form-input">
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Password" required class="form-input">
+                    <button type="button" class="password-toggle">👁️</button>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Confirm Password" required class="form-input">
+                    <button type="button" class="password-toggle">👁️</button>
+                </div>
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+            <p class="text-center mt-4">
+                <a href="#" id="show-login" class="text-purple-300 hover:text-white">Already have an account? Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Inactive User Prompt -->
+    <div id="inactive-prompt" class="inactive-prompt hidden">
+        <div class="prompt-content">
+            <h3 class="text-xl font-bold text-white mb-4">Ready to Ignite Your Mind?</h3>
+            <p class="text-purple-200 mb-6">Join thousands of learners and unlock your full potential!</p>
+            <button id="prompt-signup" class="prompt-btn">Sign Up Now</button>
+            <button id="prompt-login" class="prompt-btn secondary">Login</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
