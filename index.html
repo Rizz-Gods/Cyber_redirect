@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindIgnite - Neuroscience Quiz Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neuro-purple': '#8B5CF6',
+                        'neuro-blue': '#3B82F6',
+                        'neuro-pink': '#EC4899',
+                        'glass-white': 'rgba(255, 255, 255, 0.1)',
+                        'glass-dark': 'rgba(0, 0, 0, 0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 min-h-screen overflow-x-hidden">
+    <!-- Hamburger Menu -->
+    <div class="fixed top-6 left-6 z-50">
+        <button id="hamburger" class="w-12 h-12 bg-glass-white backdrop-blur-lg rounded-xl border border-white/20 flex flex-col justify-center items-center space-y-1 transition-all duration-300 hover:bg-glass-dark">
+            <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300"></span>
+        </button>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div id="sidebar" class="fixed top-0 left-0 w-80 h-full bg-glass-white backdrop-blur-xl border-r border-white/20 z-40 transform -translate-x-full transition-transform duration-500 ease-out">
+        <div class="p-8 pt-20">
+            <h2 class="text-3xl font-bold text-white mb-8 bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">Navigation</h2>
+            <nav class="space-y-4">
+                <a href="#" data-page="home" class="nav-link flex items-center space-x-4 p-4 rounded-xl bg-glass-white hover:bg-glass-dark transition-all duration-300 text-white">
+                    <span class="w-2 h-2 bg-neuro-purple rounded-full"></span>
+                    <span>Home</span>
+                </a>
+                <a href="#" data-page="subjects" class="nav-link flex items-center space-x-4 p-4 rounded-xl bg-glass-white hover:bg-glass-dark transition-all duration-300 text-white">
+                    <span class="w-2 h-2 bg-neuro-blue rounded-full"></span>
+                    <span>Subjects</span>
+                </a>
+                <a href="#" data-page="scoreboard" class="nav-link flex items-center space-x-4 p-4 rounded-xl bg-glass-white hover:bg-glass-dark transition-all duration-300 text-white">
+                    <span class="w-2 h-2 bg-neuro-pink rounded-full"></span>
+                    <span>Scoreboard</span>
+                </a>
+                <a href="#" data-page="profile" class="nav-link flex items-center space-x-4 p-4 rounded-xl bg-glass-white hover:bg-glass-dark transition-all duration-300 text-white">
+                    <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+                    <span>Profile</span>
+                </a>
+                <a href="#" data-page="about" class="nav-link flex items-center space-x-4 p-4 rounded-xl bg-glass-white hover:bg-glass-dark transition-all duration-300 text-white">
+                    <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+                    <span>About Us</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <!-- Main Content Container -->
+    <div id="main-content" class="relative z-10">
+        
+        <!-- Home Page -->
+        <div id="page-home" class="page active">
+            <!-- Hero Section with Brain Animation -->
+            <section class="hero-section h-screen flex flex-col items-center justify-center relative">
+                <div class="brain-container relative">
+                    <!-- Brain SVG with animations -->
+                    <svg id="brain-svg" width="300" height="200" viewBox="0 0 300 200" class="brain-svg">
+                        <defs>
+                            <radialGradient id="brainGradient" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#FF6B6B" stop-opacity="0.8"/>
+                                <stop offset="50%" stop-color="#FF8E53" stop-opacity="0.6"/>
+                                <stop offset="100%" stop-color="#FF3E3E" stop-opacity="0.4"/>
+                            </radialGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                                <feMerge> 
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        <!-- Brain shape -->
+                        <path d="M50 80 Q80 40 120 60 Q160 30 200 50 Q240 40 260 80 Q250 120 200 140 Q160 160 120 140 Q80 150 50 120 Z" 
+                              fill="url(#brainGradient)" 
+                              filter="url(#glow)" 
+                              class="brain-path"/>
+                        <!-- Neural connections -->
+                        <g class="neural-network">
+                            <circle cx="80" cy="70" r="2" fill="#8B5CF6" class="neuron"/>
+                            <circle cx="120" cy="90" r="2" fill="#3B82F6" class="neuron"/>
+                            <circle cx="160" cy="75" r="2" fill="#EC4899" class="neuron"/>
+                            <circle cx="200" cy="95" r="2" fill="#10B981" class="neuron"/>
+                            <line x1="80" y1="70" x2="120" y2="90" stroke="#8B5CF6" stroke-width="1" opacity="0.6" class="synapse"/>
+                            <line x1="120" y1="90" x2="160" y2="75" stroke="#3B82F6" stroke-width="1" opacity="0.6" class="synapse"/>
+                            <line x1="160" y1="75" x2="200" y2="95" stroke="#EC4899" stroke-width="1" opacity="0.6" class="synapse"/>
+                        </g>
+                    </svg>
+                    
+                    <!-- Spinal Cord -->
+                    <div class="spinal-cord">
+                        <div class="spine-segment"></div>
+                        <div class="spine-segment"></div>
+                        <div class="spine-segment"></div>
+                        <div class="spine-segment"></div>
+                        <div class="spine-segment"></div>
+                        <div class="purple-vapor"></div>
+                    </div>
+                </div>
+                
+                <h1 class="text-6xl font-bold text-white mt-8 text-center">
+                    <span class="bg-gradient-to-r from-neuro-purple via-neuro-blue to-neuro-pink bg-clip-text text-transparent">
+                        MindIgnite
+                    </span>
+                </h1>
+                <p class="text-xl text-white/80 mt-4 text-center max-w-2xl">
+                    Ignite the synaptic pathways of intellectual transcendence through neurocognitive stimulation and epistemic enlightenment
+                </p>
+                
+                <div class="cta-buttons mt-8 flex space-x-4">
+                    <button id="login-btn" class="px-8 py-4 bg-glass-white backdrop-blur-lg rounded-xl border border-white/20 text-white hover:bg-glass-dark transition-all duration-300">
+                        Neural Login
+                    </button>
+                    <button id="signup-btn" class="px-8 py-4 bg-gradient-to-r from-neuro-purple to-neuro-blue rounded-xl text-white hover:scale-105 transition-all duration-300">
+                        Ignite Consciousness
+                    </button>
+                </div>
+            </section>
+
+            <!-- Info Cards Section -->
+            <section class="info-cards py-20">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="info-card" data-subject="science">
+                            <h3 class="text-2xl font-bold text-white mb-4">Empirical Sciences</h3>
+                            <p class="text-white/80 quote">
+                                "Through methodical observation and rigorous experimentation, we unravel the intricate tapestry of natural phenomena, transmuting curiosity into comprehension."
+                            </p>
+                            <div class="subject-buttons hidden">
+                                <button class="subject-btn" data-category="physics">Quantum Physics</button>
+                                <button class="subject-btn" data-category="chemistry">Molecular Chemistry</button>
+                                <button class="subject-btn" data-category="biology">Cellular Biology</button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card" data-subject="mathematics">
+                            <h3 class="text-2xl font-bold text-white mb-4">Mathematical Abstractions</h3>
+                            <p class="text-white/80 quote">
+                                "Within the ethereal realm of numerical relationships and geometric harmonies lies the fundamental language through which the universe articulates its deepest truths."
+                            </p>
+                            <div class="subject-buttons hidden">
+                                <button class="subject-btn" data-category="algebra">Abstract Algebra</button>
+                                <button class="subject-btn" data-category="calculus">Differential Calculus</button>
+                                <button class="subject-btn" data-category="geometry">Sacred Geometry</button>
+                            </div>
+                        </div>
+                        
+                        <div class="info-card" data-subject="literature">
+                            <h3 class="text-2xl font-bold text-white mb-4">Literary Consciousness</h3>
+                            <p class="text-white/80 quote">
+                                "Through the alchemical transformation of thoughts into words, literature becomes the vessel through which human consciousness transcends temporal boundaries."
+                            </p>
+                            <div class="subject-buttons hidden">
+                                <button class="subject-btn" data-category="poetry">Metaphysical Poetry</button>
+                                <button class="subject-btn" data-category="prose">Existential Prose</button>
+                                <button class="subject-btn" data-category="drama">Classical Drama</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carousel Section -->
+            <section class="carousel-section py-20">
+                <div class="container mx-auto px-6">
+                    <h2 class="text-4xl font-bold text-white text-center mb-12">
+                        <span class="bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">
+                            Cognitive Domains
+                        </span>
+                    </h2>
+                    <div class="carousel-container">
+                        <div class="carousel-track">
+                            <div class="carousel-card" data-subject="technology">
+                                <h3>Technological Singularity</h3>
+                                <p>"Where silicon consciousness meets carbon intuition"</p>
+                            </div>
+                            <div class="carousel-card" data-subject="engineering">
+                                <h3>Engineering Paradigms</h3>
+                                <p>"Architecting solutions through systematic innovation"</p>
+                            </div>
+                            <div class="carousel-card" data-subject="history">
+                                <h3>Temporal Narratives</h3>
+                                <p>"Chronicling humanity's evolutionary consciousness"</p>
+                            </div>
+                            <div class="carousel-card" data-subject="arts">
+                                <h3>Aesthetic Expressions</h3>
+                                <p>"Manifesting the ineffable through creative transcendence"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Subjects Page -->
+        <div id="page-subjects" class="page">
+            <section class="subjects-grid py-20">
+                <div class="container mx-auto px-6">
+                    <h1 class="text-5xl font-bold text-white text-center mb-16">
+                        <span class="bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">
+                            Cognitive Territories
+                        </span>
+                    </h1>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div class="subject-detail-card" data-animation="matrix">
+                            <h3>Mathematical Consciousness</h3>
+                            <p>Delve into the transcendental realm where numerical abstractions converge with infinite possibilities, exploring the fundamental architectures that govern reality's computational matrix.</p>
+                        </div>
+                        <div class="subject-detail-card" data-animation="neurons">
+                            <h3>Scientific Empiricism</h3>
+                            <p>Navigate through methodological paradigms that illuminate the intricate mechanisms of natural phenomena, transforming hypothetical constructs into empirical certainties.</p>
+                        </div>
+                        <div class="subject-detail-card" data-animation="books">
+                            <h3>Literary Metamorphosis</h3>
+                            <p>Immerse in the alchemical transformation of consciousness through textual narratives, where linguistic artistry transcends temporal boundaries and cultural limitations.</p>
+                        </div>
+                        <div class="subject-detail-card" data-animation="gears">
+                            <h3>Technological Synthesis</h3>
+                            <p>Explore the convergence of human ingenuity with computational intelligence, where algorithmic precision meets creative innovation in symbiotic harmony.</p>
+                        </div>
+                        <div class="subject-detail-card" data-animation="scrolls">
+                            <h3>Historical Continuity</h3>
+                            <p>Traverse the temporal tapestry of human civilization, analyzing the evolutionary patterns that shape societal consciousness and cultural paradigms.</p>
+                        </div>
+                        <div class="subject-detail-card" data-animation="palette">
+                            <h3>Aesthetic Philosophy</h3>
+                            <p>Contemplate the manifestation of beauty through creative expression, where artistic sensibility intersects with philosophical contemplation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Scoreboard Page -->
+        <div id="page-scoreboard" class="page">
+            <section class="scoreboard py-20">
+                <div class="container mx-auto px-6">
+                    <h1 class="text-5xl font-bold text-white text-center mb-16">
+                        <span class="bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">
+                            Cognitive Hierarchy
+                        </span>
+                    </h1>
+                    <div class="leaderboard-container">
+                        <div class="leaderboard-item rank-1">
+                            <span class="rank">#1</span>
+                            <span class="name">Neural Architect</span>
+                            <span class="score">9,847</span>
+                        </div>
+                        <div class="leaderboard-item rank-2">
+                            <span class="rank">#2</span>
+                            <span class="name">Quantum Sage</span>
+                            <span class="score">9,234</span>
+                        </div>
+                        <div class="leaderboard-item rank-3">
+                            <span class="rank">#3</span>
+                            <span class="name">Synaptic Pioneer</span>
+                            <span class="score">8,765</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="rank">#4</span>
+                            <span class="name">Cognitive Voyager</span>
+                            <span class="score">8,432</span>
+                        </div>
+                        <div class="leaderboard-item">
+                            <span class="name">Mind Weaver</span>
+                            <span class="score">8,123</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Profile Page -->
+        <div id="page-profile" class="page">
+            <section class="profile py-20">
+                <div class="container mx-auto px-6">
+                    <h1 class="text-5xl font-bold text-white text-center mb-16">
+                        <span class="bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">
+                            Neural Profile
+                        </span>
+                    </h1>
+                    <div class="profile-container">
+                        <div class="profile-avatar">
+                            <div class="avatar-circle"></div>
+                        </div>
+                        <div class="profile-info">
+                            <h2 class="text-3xl font-bold text-white mb-4">Cognitive Explorer</h2>
+                            <div class="progress-section">
+                                <h3 class="text-xl text-white mb-4">Neural Development</h3>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" data-progress="75"></div>
+                                </div>
+                                <p class="text-white/80 mt-2">75% Synaptic Optimization</p>
+                            </div>
+                            <div class="quiz-history mt-8">
+                                <h3 class="text-xl text-white mb-4">Recent Cognitive Assessments</h3>
+                                <div class="history-item">
+                                    <span class="subject">Quantum Physics</span>
+                                    <span class="score">92%</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="subject">Abstract Mathematics</span>
+                                    <span class="score">88%</span>
+                                </div>
+                                <div class="history-item">
+                                    <span class="subject">Literary Analysis</span>
+                                    <span class="score">95%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- About Page -->
+        <div id="page-about" class="page">
+            <section class="about py-20">
+                <div class="container mx-auto px-6">
+                    <h1 class="text-5xl font-bold text-white text-center mb-16">
+                        <span class="bg-gradient-to-r from-neuro-purple to-neuro-blue bg-clip-text text-transparent">
+                            Philosophical Genesis
+                        </span>
+                    </h1>
+                    <div class="about-content">
+                        <div class="philosophy-text">
+                            <p class="text-xl text-white/90 leading-relaxed mb-8">
+                                Within the infinite expanse of human consciousness lies an unquenchable thirst for knowledge—a primordial drive that transcends the boundaries of temporal existence and cultural paradigms. MindIgnite emerges as the confluence where neuroscientific understanding meets pedagogical innovation, creating a synergistic environment for intellectual metamorphosis.
+                            </p>
+                            <p class="text-xl text-white/90 leading-relaxed mb-8">
+                                Our platform operates on the fundamental principle that learning is not merely the acquisition of information, but rather the dynamic reconfiguration of neural pathways, the establishment of new synaptic connections, and the cultivation of cognitive resilience. Through carefully curated challenges that span the breadth of human knowledge, we facilitate the transformation of potential into actualized understanding.
+                            </p>
+                            <p class="text-xl text-white/90 leading-relaxed">
+                                Each question becomes a catalyst for neuroplasticity, every correct answer a celebration of synaptic triumph, and every learning moment a step closer to the realization of one's intellectual potential. We envision a future where the pursuit of knowledge becomes as addictive as the pursuit of pleasure, where curiosity burns as brightly as ambition, and where the human mind reaches its evolutionary zenith through perpetual learning.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Neural Authentication</h2>
+            <form class="space-y-6">
+                <div class="input-group">
+                    <input type="email" placeholder="Cognitive Identifier" class="neural-input">
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Synaptic Key" class="neural-input">
+                    <button type="button" class="password-toggle">👁</button>
+                </div>
+                <button type="submit" class="submit-btn">Establish Connection</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">Consciousness Registration</h2>
+            <form class="space-y-6">
+                <div class="input-group">
+                    <input type="text" placeholder="Neural Designation" class="neural-input">
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Cognitive Identifier" class="neural-input">
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Synaptic Encryption" class="neural-input">
+                    <button type="button" class="password-toggle">👁</button>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Confirm Encryption" class="neural-input">
+                </div>
+                <button type="submit" class="submit-btn">Ignite Neural Network</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Auto Registration Popup -->
+    <div id="auto-popup" class="auto-registration-popup">
+        <div class="popup-content">
+            <h3 class="text-2xl font-bold text-white mb-4">Awaken Your Potential</h3>
+            <p class="text-white/80 mb-6">Join the cognitive revolution and unlock unlimited learning possibilities</p>
+            <button id="popup-register" class="popup-btn">Begin Transformation</button>
+            <button id="popup-close" class="popup-close">Maybe Later</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
